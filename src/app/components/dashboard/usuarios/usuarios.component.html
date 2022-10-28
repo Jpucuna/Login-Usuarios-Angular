@@ -1,0 +1,69 @@
+<div class="container">
+    <mat-toolbar>
+        <span>Usuarios</span>
+        <div class="example-spacer">
+        </div>
+        <button routerLink="/dashboard/crear-usuario" mat-raised-button color="primary">Agregar</button>
+    </mat-toolbar>
+
+    <div *ngIf="listUsuario.length > 0">
+        <mat-form-field appearance="standard">
+            <mat-label>Filtro</mat-label>
+            <input matInput (keyup)="applyFilter($event)" autocomplete="off" placeholder="filtrar" #input>
+          </mat-form-field>
+    
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+    
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="usuario">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+                  <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                  <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="apellido">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
+                  <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="sexo">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Sexo </th>
+                  <td mat-cell *matCellDef="let element"> {{element.sexo}} </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="text-align: right;"> 
+                        <a class="pointer" style="color: #1878b0">
+                            <mat-icon  matTooltip="buscar">search</mat-icon>
+                        </a>
+                        <a class="pointer" style="color: #1f516f;">
+                            <mat-icon matTooltip="editar">edit</mat-icon>
+                        </a> 
+                        <a class="pointer" (click)="eliminarUsuario(i)" style="color: #e15639;">
+                            <mat-icon matTooltip="eliminar">delete</mat-icon>
+                        </a>
+                    </td>
+                  </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+          </div>
+    </div>
+
+    <h2 *ngIf="listUsuario.length == 0">No existen usuarios para mostrar </h2>
+
+</div>
